@@ -10,12 +10,11 @@ import re
 
 gConfig = {}
 
-gConfig=getConfig.get_config()
+gConfig=getConfig.get_config(config_file='seq2seq.ini')
 
 conv_path = gConfig['resource_data']
  
 if not os.path.exists(conv_path):
-	
 	exit()
 #下面这段我们需要完成一件事，就是将训练集的数据识别读取并存入一个List中，大概分为以下几个步骤
 #a、打开文件 
@@ -26,7 +25,7 @@ convs = []  # 用于存储对话的列表
 with open(conv_path,encoding='utf-8') as f:
 	one_conv = []        # 存储一次完整对话
 	for line in f:
-		line = line.strip('\n').replace('?', '')#去除换行符，并将原文件中已经分词的标记去掉，重新用结巴分词.
+		line = line.strip('\n').replace('?', '') #去除换行符，并将原文件中已经分词的标记去掉，重新用结巴分词.
 		line=re.sub(r"[%s]+" %punctuation, "",line)
 		if line == '':
 			continue
@@ -60,10 +59,9 @@ for conv in convs:
 seq_train = open(gConfig['seq_data'],'w') 
 
 for i in range(len(seq)):
-   seq_train.write(seq[i]+'\n')
- 
-   if i % 1000 == 0:
-      print(len(range(len(seq))), '处理进度：', i)
+	seq_train.write(seq[i]+'\n')
+	if i % 1000 == 0:
+		print(len(range(len(seq))), '处理进度：', i)
  
 seq_train.close()
 

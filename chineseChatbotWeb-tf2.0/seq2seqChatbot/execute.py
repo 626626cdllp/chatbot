@@ -89,6 +89,8 @@ def train():
         seq2seqModel.checkpoint.save(file_prefix=checkpoint_prefix)
 
         sys.stdout.flush()
+
+
 def predict(sentence):
 
     checkpoint_dir = gConfig['model_data']
